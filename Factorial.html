@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factorial and Natural Numbers</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #fff;
+        color: #000;
+        margin: 0;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+    h1 {
+        margin-top: 40px;
+        position: relative;
+        z-index: 2;
+    }
+    .calculator {
+        margin: 30px auto;
+        padding: 20px;
+        max-width: 400px;
+        border: 1px solid #000;
+        border-radius: 8px;
+        position: relative;
+        z-index: 2;
+        background: #fff;
+    }
+    input {
+        padding: 8px;
+        width: 150px;
+        margin: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #000;
+        color: #fff;
+    }
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+        white-space: pre-wrap;
+    }
+    .back-home {
+        display: inline-block;
+        margin-top: 40px;
+        text-decoration: none;
+        color: #000;
+        border: 1px solid #000;
+        padding: 10px 20px;
+        border-radius: 5px;
+        position: relative;
+        z-index: 2;
+    }
+    .back-home:hover {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.05;
+        z-index: 1;
+        animation: float 20s linear infinite alternate;
+    }
+    @keyframes float {
+        0% { transform: translate(0px, 0px); }
+        50% { transform: translate(30px, -20px); }
+        100% { transform: translate(0px, 0px); }
+    }
+    .shape1 { width:120px;height:120px;background:#000;top:20px;left:30px; animation-duration: 25s; }
+    .shape2 { width:80px;height:80px;background:#222;top:150px;left:200px; animation-duration: 22s; }
+    .shape3 { width:150px;height:150px;background:#555;top:300px;left:50px; animation-duration: 30s; }
+    .shape4 { width:50px;height:50px;background:#333;top:500px;left:180px; animation-duration: 18s; }
+    .shape5 { width:200px;height:200px;background:#777;top:600px;left:300px; animation-duration: 35s; }
+    .shape6 { width:60px;height:60px;background:#000;top:100px;right:50px; animation-duration: 28s; }
+    .shape7 { width:100px;height:100px;background:#444;top:250px;right:100px; animation-duration: 32s; }
+    .shape8 { width:120px;height:120px;background:#222;top:400px;right:50px; animation-duration: 26s; }
+    .shape9 { width:80px;height:80px;background:#555;bottom:150px;left:50px; animation-duration: 20s; }
+    .shape10 { width:50px;height:50px;background:#777;bottom:200px;left:180px; animation-duration: 24s; }
+</style>
+</head>
+<body>
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+    <div class="shape shape4"></div>
+    <div class="shape shape5"></div>
+    <div class="shape shape6"></div>
+    <div class="shape shape7"></div>
+    <div class="shape shape8"></div>
+    <div class="shape shape9"></div>
+    <div class="shape shape10"></div>
+
+    <h1>Factorial and Natural Numbers</h1>
+
+    <div class="calculator">
+        <input type="number" id="numberInput" placeholder="Enter a number">
+        <br>
+        <button onclick="factorialWhile()">Factorial (While Loop)</button>
+        <button onclick="sumDoWhile()">Sum (Do While Loop)</button>
+        <button onclick="averageFor()">Average (For Loop)</button>
+        <div id="result"></div>
+    </div>
+
+    <a href="index.html" class="back-home">← Back to Home Page</a>
+
+    <script>
+        function factorialWhile() {
+            let num = parseInt(document.getElementById('numberInput').value);
+            if (isNaN(num) || num < 0) {
+                document.getElementById('result').innerText = 'Please enter a valid non-negative integer.';
+                return;
+            }
+            let factorial = 1;
+            let i = 1;
+            while (i <= num) {
+                factorial *= i;
+                i++;
+            }
+            document.getElementById('result').innerText = `Factorial of ${num} is ${factorial}`;
+        }
+
+        function sumDoWhile() {
+            let num = parseInt(document.getElementById('numberInput').value);
+            if (isNaN(num) || num < 1) {
+                document.getElementById('result').innerText = 'Please enter a valid positive integer.';
+                return;
+            }
+            let sum = 0;
+            let i = 1;
+            do {
+                sum += i;
+                i++;
+            } while (i <= num);
+            document.getElementById('result').innerText = `Sum of first ${num} natural numbers is ${sum}`;
+        }
+
+        function averageFor() {
+            let num = parseInt(document.getElementById('numberInput').value);
+            if (isNaN(num) || num < 1) {
+                document.getElementById('result').innerText = 'Please enter a valid positive integer.';
+                return;
+            }
+            let sum = 0;
+            for (let i = 1; i <= num; i++) {
+                sum += i;
+            }
+            let avg = sum / num;
+            document.getElementById('result').innerText = `Average of first ${num} natural numbers is ${avg.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
