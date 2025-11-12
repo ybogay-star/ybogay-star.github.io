@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payroll Calculator</title>
+<style>
+body { font-family: Arial, sans-serif; text-align: center; background: #fff; color: #000; margin: 0; padding: 20px; position: relative; overflow-x: hidden; }
+h1 { margin-top: 40px; position: relative; z-index: 2; }
+.calculator { margin: 30px auto; padding: 20px; max-width: 500px; border: 1px solid #000; border-radius: 8px; position: relative; z-index: 2; background: #fff; }
+input { padding: 8px; width: 200px; margin: 10px; }
+button { padding: 10px 20px; margin: 10px; border: 1px solid #000; border-radius: 5px; background-color: #fff; cursor: pointer; }
+button:hover { background-color: #000; color: #fff; }
+table { margin: 20px auto; border-collapse: collapse; width: 90%; position: relative; z-index: 2; }
+th, td { border: 1px solid #000; padding: 10px; }
+th { background-color: #f2f2f2; }
+.back-home { display: inline-block; margin-top: 40px; text-decoration: none; color: #000; border: 1px solid #000; padding: 10px 20px; border-radius: 5px; position: relative; z-index: 2; }
+.back-home:hover { background-color: #000; color: #fff; }
+.shape { position: absolute; border-radius: 50%; opacity: 0.05; z-index: 1; animation: float 20s linear infinite alternate; }
+@keyframes float { 0% { transform: translate(0px, 0px); } 50% { transform: translate(30px, -20px); } 100% { transform: translate(0px, 0px); } }
+.shape1 { width:120px;height:120px;background:#000;top:20px;left:30px; animation-duration: 25s; }
+.shape2 { width:80px;height:80px;background:#222;top:150px;left:200px; animation-duration: 22s; }
+.shape3 { width:150px;height:150px;background:#555;top:300px;left:50px; animation-duration: 30s; }
+.shape4 { width:50px;height:50px;background:#333;top:500px;left:180px; animation-duration: 18s; }
+.shape5 { width:200px;height:200px;background:#777;top:600px;left:300px; animation-duration: 35s; }
+.shape6 { width:60px;height:60px;background:#000;top:100px;right:50px; animation-duration: 28s; }
+.shape7 { width:100px;height:100px;background:#444;top:250px;right:100px; animation-duration: 32s; }
+.shape8 { width:120px;height:120px;background:#222;top:400px;right:50px; animation-duration: 26s; }
+.shape9 { width:80px;height:80px;background:#555;bottom:150px;left:50px; animation-duration: 20s; }
+.shape10 { width:50px;height:50px;background:#777;bottom:200px;left:180px; animation-duration: 24s; }
+</style>
+</head>
+<body>
+<div class="shape shape1"></div>
+<div class="shape shape2"></div>
+<div class="shape shape3"></div>
+<div class="shape shape4"></div>
+<div class="shape shape5"></div>
+<div class="shape shape6"></div>
+<div class="shape shape7"></div>
+<div class="shape shape8"></div>
+<div class="shape shape9"></div>
+<div class="shape shape10"></div>
+
+<h1>Payroll Calculator</h1>
+
+<div class="calculator">
+<input type="text" id="employeeName" placeholder="Employee Name"><br>
+<input type="number" id="daysWorked" placeholder="Days Worked"><br>
+<input type="number" id="dailyRate" placeholder="Daily Rate"><br>
+<input type="number" id="deduction" placeholder="Deduction Amount"><br>
+<button onclick="addEmployee()">Add Employee</button>
+<button onclick="deleteEmployee()">Delete Employee</button>
+</div>
+
+<table id="payrollTable" style="display:none;">
+<thead>
+<tr>
+<th>No.</th>
+<th>Employee Name</th>
+<th>Days Worked</th>
+<th>Daily Rate</th>
+<th>Gross Pay</th>
+<th>Deduction Amount</th>
+<th>Net Pay</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+
+<a href="index.html" class="back-home">← Back to Home Page</a>
+
+<script>
+let employees = [];
+
+function addEmployee(){
+const name = document.getElementById('employeeName').value.trim();
+const days = parseFloat(document.getElementById('daysWorked').value);
+const rate = parseFloat(document.getElementById('dailyRate').value);
+const deduction = parseFloat(document.getElementById('deduction').value);
+
+if(!name || isNaN(days) || isNaN(rate) || isNaN(deduction) || days<0 || rate<0 || deduction<0){
+    alert('Please enter valid data for all fields.');
+    return;
+}
+
+const grossPay = days * rate;
+const netPay = grossPay - deduction;
+
+employees.push({name, days, rate, deduction, grossPay, netPay});
+updateTable();
+
+document.getElementById('employeeName').value = '';
+document.getElementById('daysWorked').value = '';
+document.getElementById('dailyRate').value = '';
+document.getElementById('deduction').value = '';
+}
+
+function deleteEmployee(){
+const lineNo = parseInt(prompt("Enter the Line Number to delete:"));
+if(isNaN(lineNo) || lineNo < 1 || lineNo > employees.length){
+    alert("Invalid Line Number.");
+    return;
+}
+employees.splice(lineNo-1, 1);
+updateTable();
+}
+
+function updateTable(){
+const tableBody = document.getElementById('tableBody');
+tableBody.innerHTML = '';
+employees.forEach((emp,index)=>{
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${index+1}</td>
+                     <td>${emp.name}</td>
+                     <td>${emp.days}</td>
+                     <td>${emp.rate.toFixed(2)}</td>
+                     <td>${emp.grossPay.toFixed(2)}</td>
+                     <td>${emp.deduction.toFixed(2)}</td>
+                     <td>${emp.netPay.toFixed(2)}</td>`;
+    tableBody.appendChild(row);
+});
+document.getElementById('payrollTable').style.display = employees.length?'table':'none';
+}
+</script>
+</body>
+</html>
