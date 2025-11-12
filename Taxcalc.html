@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Tax Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #fff;
+        color: #000;
+        margin: 0;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+    h1 {
+        margin-top: 40px;
+        position: relative;
+        z-index: 2;
+    }
+    .calculator {
+        margin: 30px auto;
+        padding: 20px;
+        max-width: 400px;
+        border: 1px solid #000;
+        border-radius: 8px;
+        position: relative;
+        z-index: 2;
+        background: #fff;
+    }
+    input {
+        padding: 8px;
+        width: 150px;
+        margin: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #000;
+        color: #fff;
+    }
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+        position: relative;
+        z-index: 2;
+    }
+    .back-home {
+        display: inline-block;
+        margin-top: 40px;
+        text-decoration: none;
+        color: #000;
+        border: 1px solid #000;
+        padding: 10px 20px;
+        border-radius: 5px;
+        position: relative;
+        z-index: 2;
+    }
+    .back-home:hover {
+        background-color: #000;
+        color: #fff;
+    }
+
+    /* Floating Shapes */
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.05;
+        z-index: 1;
+        animation: float 20s linear infinite alternate;
+    }
+    @keyframes float {
+        0% { transform: translate(0px, 0px); }
+        50% { transform: translate(30px, -20px); }
+        100% { transform: translate(0px, 0px); }
+    }
+    .shape1 { width:120px;height:120px;background:#000;top:20px;left:30px; animation-duration: 25s; }
+    .shape2 { width:80px;height:80px;background:#222;top:150px;left:200px; animation-duration: 22s; }
+    .shape3 { width:150px;height:150px;background:#555;top:300px;left:50px; animation-duration: 30s; }
+    .shape4 { width:50px;height:50px;background:#333;top:500px;left:180px; animation-duration: 18s; }
+    .shape5 { width:200px;height:200px;background:#777;top:600px;left:300px; animation-duration: 35s; }
+    .shape6 { width:60px;height:60px;background:#000;top:100px;right:50px; animation-duration: 28s; }
+    .shape7 { width:100px;height:100px;background:#444;top:250px;right:100px; animation-duration: 32s; }
+    .shape8 { width:120px;height:120px;background:#222;top:400px;right:50px; animation-duration: 26s; }
+    .shape9 { width:80px;height:80px;background:#555;bottom:150px;left:50px; animation-duration: 20s; }
+    .shape10 { width:50px;height:50px;background:#777;bottom:200px;left:180px; animation-duration: 24s; }
+</style>
+</head>
+<body>
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+    <div class="shape shape4"></div>
+    <div class="shape shape5"></div>
+    <div class="shape shape6"></div>
+    <div class="shape shape7"></div>
+    <div class="shape shape8"></div>
+    <div class="shape shape9"></div>
+    <div class="shape shape10"></div>
+
+    <h1>Income Tax Calculator</h1>
+
+    <div class="calculator">
+        <input type="number" id="income" placeholder="Enter Income">
+        <br>
+        <button onclick="calculateTax()">Calculate Tax</button>
+        <div id="result"></div>
+    </div>
+
+    <a href="index.html" class="back-home">← Back to Home Page</a>
+
+    <script>
+        function calculateTax() {
+            const income = parseFloat(document.getElementById('income').value);
+            let tax = 0;
+
+            if (isNaN(income) || income < 0) {
+                document.getElementById('result').innerText = 'Please enter a valid income.';
+                return;
+            }
+
+            if (income <= 250000) {
+                tax = 0;
+            } else if (income <= 400000) {
+                tax = (income - 250000) * 0.20;
+            } else if (income <= 800000) {
+                tax = 30000 + (income - 400000) * 0.25;
+            } else if (income <= 2000000) {
+                tax = 130000 + (income - 800000) * 0.30;
+            } else if (income <= 8000000) {
+                tax = 490000 + (income - 2000000) * 0.32;
+            } else {
+                tax = 2410000 + (income - 8000000) * 0.35;
+            }
+
+            document.getElementById('result').innerText = 'Estimated Tax: ₱' + tax.toFixed(2);
+        }
+    </script>
+</body>
+</html>
